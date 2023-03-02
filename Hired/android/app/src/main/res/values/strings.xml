@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hired</string>
+    <string name="facebook_app_id">963406898372975</string>
+    <string name="fb_login_protocol_scheme">fb963406898372975</string>
 </resources>

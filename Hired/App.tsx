@@ -1,161 +1,103 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-import Video from 'react-native-video';
 
-import React, { useRef,useState,useCallback } from 'react';
+import * as React from 'react'
 import {
   StyleSheet,
   Text,
-  useColorScheme,
-  Dimensions,
   View,
-  FlatList,
-  Image,
-  TouchableOpacity,
 } from 'react-native';
 
-function App(): JSX.Element {
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-  const array = [1,2,3,4,5]
-  const videos = [require('./Images/girl.mp4'),
-  require('./Images/perfume.mp4'),
-  require('./Images/girl.mp4'),
-  require('./Images/perfume.mp4'),
-  require('./Images/girl.mp4')]
+import Login from './Login/Login';
+import CreateProfile from './CreateProfile/CreateProfile';
+import PublicProfile from './PublicProfile/PublicProfile';
+import JobCategory from './JobCategory/JobCategory';
+import JobList from './JobList/JobList';
+import Watchlist from './Watchlist/Watchlist';
+import Home from './Home/Home';
+import ViewJobPost from './JobPost/ViewJobPost';
+import ApplyJob from './ApplyJob/ApplyJob';
+import ApplicationList from './ApplicationList/ApplicationList';
+import PurchaseAdd from './PurchaseAdd/PurchaseAdd';
+import JobPost from './JobPost/JobPost';
+import SideMenu from './SideMenu/SideMenu';
+import AccountType from './AccountType/AccountType';
+import EmployerWatchlist from './Watchlist/EmployerWatchlist';
 
-  const [paused0, setpaused0] = useState(true)
-  const [paused1, setpaused1] = useState(true)
-  const [paused2, setpaused2] = useState(true)
-  const [paused3, setpaused3] = useState(true)
-  const [paused4, setpaused4] = useState(true)
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
-  // const mediaRefs = useRef([])
-
-  // const onviewchange = useRef(({changed})=> {
-
-  //   changed.forearch(element => {
-  //     const cell = mediaRefs.current[element]
-  //     if (cell)
-  //     {
-  //       console.log('onviewchange' , element ,)
-  //       if element.
-  //     }
-  //   })
-  // })
-
-  const renderItem = ({ item ,index }) => {
-
-
-    return (
-
-      <View style = {[{flex : 1 , height : Dimensions.get('window').height}]}>
-        {/* <Text>{item}</Text> */}
-        
-        {/* <VisibilitySensor onChange={handlePlaying}> */}
-      
-        <TouchableOpacity style = {{justifyContent : 'center'}} activeOpacity={1.0} onPress={()=> index == 0 ? setpaused0(!paused0) : index == 1 ? setpaused1(!paused1) : index == 2 ? setpaused2(!paused2) : index == 3 ? setpaused3(!paused3) : setpaused4(!paused4)}>
-        <Video resizeMode ='cover'
-         style= {{ width : '100%' ,height : '100%'}} 
-         source = {videos[index]} 
-         paused = {index == 0 ? paused0 : index == 1 ? paused1 : index == 2 ? paused2 : index == 3 ? paused3 : paused4 }
-         repeat />
-        {
-         index == 0 && paused0 == true ?
-        <Image resizeMode='contain' style = {{position : 'absolute' , height : '10%' , width : '15%', alignSelf : 'center'}} source={require('./Images/play.png')} />
-        : 
-          index == 1 && paused1 == true ?
-          <Image resizeMode='contain' style = {{position : 'absolute' , height : '10%' , width : '15%', alignSelf : 'center'}} source={require('./Images/play.png')} />
-          : 
-         index == 2 && paused2 == true ?
-          <Image resizeMode='contain' style = {{position : 'absolute' , height : '10%' , width : '15%', alignSelf : 'center'}} source={require('./Images/play.png')} />
-          : 
-         index == 3 && paused3 == true ?
-        <Image resizeMode='contain' style = {{position : 'absolute' , height : '10%' , width : '15%', alignSelf : 'center'}} source={require('./Images/play.png')} />
-       :
-         index == 4 && paused4 == true ? 
-        <Image resizeMode='contain' style = {{position : 'absolute' , height : '10%' , width : '15%', alignSelf : 'center'}} source={require('./Images/play.png')} />
-         : null
-         }
-         
-        </TouchableOpacity>
-
-        {/* </VisibilitySensor> */}
-       
-
-        {/* <Image style = {{resizeMode : 'cover' , width : '100%' ,height : '100%'}} source={require('../Hired/Images/girl2.jpg')}></Image> */}
-        <View style = {styles.buttonView}>
-            <View style = {styles.shadowView}>
-               <Image style = {styles.iconView}  source={require('../Hired/Images/star.png')}></Image>
-            </View>
-            <View style = {styles.shadowView}>
-            <Image style = {styles.iconView} source={require('../Hired/Images/bookmark.png')}></Image>
-            </View>
-            <View style = {styles.shadowView}>
-            <Image style = {styles.iconView} source={require('../Hired/Images/mail.png')}></Image>
-            </View>
-            <View style = {styles.shadowView}>
-            <Image style = {styles.iconView} source={require('../Hired/Images/graph.png')}></Image>
-            </View>
-            <View style = {styles.shadowView}>
-            <Image style = {styles.iconView} source={require('../Hired/Images/cardboard.png')}></Image>
-            </View>
-            <View style = {styles.shadowView}>
-            <Image style = {styles.iconView} source={require('../Hired/Images/play.png')}></Image>
-            </View>
-          </View>
-          <View style = {styles.profileView}>
-          <Image style = {{marginTop : 10 , width : '55%' , height : '40%' , alignSelf : 'center' , borderColor : 'black' ,borderWidth : 2, borderRadius : 70}} resizeMode = {'stretch'} source={require('../Hired/Images/profile.png')}></Image>
-          <Text style = {{alignSelf : 'center' , fontWeight : '600' , color : 'white' , fontSize : 15, marginTop : 10}} >Fahbina Faisal</Text>
-          </View>
-      </View>
-    )
-  }
+const Root = () => {
 
   return (
-   
-    <View>
-     
-      <FlatList 
-      data={array}
-      showsVerticalScrollIndicator = {false}
-      initialScrollIndex={0}
-      disableIntervalMomentum
-      renderItem = {renderItem}
-      pagingEnabled/>
-     
-    </View>
 
+    <NavigationContainer independent={true}>
+      <Drawer.Navigator initialRouteName='App' drawerContent={props => <SideMenu {...props} />} screenOptions={{ headerShown: false, drawerType: 'front', drawerStyle: { width: '65%', backgroundColor: 'transparent' }, swipeEnabled: false, drawerActiveTintColor: 'red' }} >
+
+        <Stack.Screen name='App' component={App} options={{ headerShown: false }} />
+
+      </Drawer.Navigator>
+    </NavigationContainer>
+  )
+}
+
+const App = () => {
+
+  return (
+
+    <Stack.Navigator initialRouteName='Home' >
+
+      {/* <Stack.Screen name='Root' component={Root} options={{ headerShown: false }} /> */}
+
+      <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+
+      <Stack.Screen name="CreateProfile" component={CreateProfile} options={{ headerShown: false }} />
+
+      <Stack.Screen name="PublicProfile" component={PublicProfile} options={{ headerShown: false }} />
+
+      <Stack.Screen name="JobList" component={JobList} options={{ headerShown: false }} />
+
+      <Stack.Screen name="Watchlist" component={Watchlist} options={{ headerShown: false }} />
+      <Stack.Screen name="EmployerWatchlist" component={EmployerWatchlist} options={{ headerShown: false }} />
+
+      <Stack.Screen name="ViewJobPost" component={ViewJobPost} options={{ headerShown: false }} />
+      <Stack.Screen name="ApplyJob" component={ApplyJob} options={{ headerShown: false }} />
+      <Stack.Screen name="ApplicationList" component={ApplicationList} options={{ headerShown: false }} />
+      <Stack.Screen name='PurchaseAdd' component={PurchaseAdd} options={{ headerShown: false }} />
+      <Stack.Screen name='JobPost' component={JobPost} options={{ headerShown: false }} />
+      <Stack.Screen name='AccountType' component={AccountType} options={{ headerShown: false }} />
+      <Stack.Screen name="JobCategory" component={JobCategory} options={{ headerShown: false }} />
+      <Stack.Screen name="SideMenu" component={SideMenu} options={{ headerShown: false }} />
+      <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
+
+    </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop : 40
+    marginTop: 40
   },
 
-  buttonView : {
-    height : '50%',
-    justifyContent : 'center',
-    width : '15%',
-    position : 'absolute',
-    bottom : 0, 
-    right : 20,
-    flex : 1,
-    // backgroundColor : 'white',
-    flexDirection : 'column',
+  buttonView: {
+    height: '50%',
+    justifyContent: 'center',
+    width: '15%',
+    position: 'absolute',
+    bottom: 0,
+    right: 20,
+    flex: 1,
+    flexDirection: 'column',
   },
 
-  shadowView : {
+  shadowView: {
 
-  width : '52%',
-  height : '15%',
-  alignSelf : 'center',
-  // backgroundColor : 'blue',
-  shadowColor: '#000000',
+    width: '52%',
+    height: '15%',
+    alignSelf: 'center',
+    shadowColor: '#000000',
     shadowOffset: {
       width: 0,
       height: 5
@@ -163,24 +105,24 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 3.0
   },
-  
-  iconView : {
-  resizeMode : 'contain',
-  alignSelf : 'center', 
-  width : '100%',
-  height : '100%'
-},
 
- profileView : {
-    justifyContent : 'center',
-    height : '19%',
-    width : '30%',
-    position : 'absolute',
-    bottom : 20, 
-    left : 20,
-    flexDirection : 'column',
- }
+  iconView: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    width: '100%',
+    height: '100%'
+  },
+
+  profileView: {
+    justifyContent: 'center',
+    height: '19%',
+    width: '30%',
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    flexDirection: 'column',
+  }
 
 });
 
-export default App;
+export default Root;
